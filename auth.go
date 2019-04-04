@@ -32,6 +32,19 @@ func (auth *PlainAuth) Response() string {
 	return fmt.Sprintf("\000%s\000%s", auth.Username, auth.Password)
 }
 
+// CertAuth for RabbitMQ-auth-mechanism-ssl.
+type CertAuth struct{}
+
+// Mechanism returns "EXTERNAL"
+func (cauth *CertAuth) Mechanism() string {
+	return "EXTERNAL"
+}
+
+// Response returns the null character delimited encoding for the SASL PLAIN Mechanism.
+func (cauth *CertAuth) Response() string {
+	return fmt.Sprintf("\000*\000*")
+}
+
 // AMQPlainAuth is similar to PlainAuth
 type AMQPlainAuth struct {
 	Username string

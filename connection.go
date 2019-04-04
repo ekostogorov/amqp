@@ -157,6 +157,15 @@ func DialTLS(url string, amqps *tls.Config) (*Connection, error) {
 	})
 }
 
+// DialTLSCertAuth --
+func DialTLSCertAuth(url string, amqps *tls.Config) (*Connection, error) {
+	return DialConfig(url, Config{
+		Heartbeat:       defaultHeartbeat,
+		TLSClientConfig: amqps,
+		SASL:            []Authentication{&CertAuth{}},
+	})
+}
+
 // DialConfig accepts a string in the AMQP URI format and a configuration for
 // the transport and connection setup, returning a new Connection.  Defaults to
 // a server heartbeat interval of 10 seconds and sets the initial read deadline
